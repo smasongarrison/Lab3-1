@@ -1,7 +1,7 @@
 Lab 03 - Nobel laureates
 ================
-Insert your name here
-Insert date here
+Cailey Fay
+10.7.25
 
 ### Load packages and data
 

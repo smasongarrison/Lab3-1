@@ -33,10 +33,6 @@ ncol(nobel)
 #There are 26 variables and 935 observations. 
 ```
 
-Remove this text, and add your answer for Exercise 1 here. Add code
-chunks as needed. Don’t forget to label your code chunk. Do not use
-spaces in code chunk labels.
-
 ### Exercise 2
 
 ``` r
@@ -112,10 +108,43 @@ table(nobel_living$born_country_us)
 
 …
 
-### Exercise 5
+### Exercise 5: The data doesn’t exactly support Buzzfeed’s claim, since many of the US winners are immigrants. However, the variable born_country_us doesn’t give us any information about how old they were when they moved to the US, so its possible that maybe some of them were toddlers when they moved, grew up in the US, went to school here, etc, and it isn’t fair to say that they should be counted as foriegners. If I had to make a decision though, I would say buzzfeed is wrong.
 
-…
+``` r
+ggplot(nobel_living, aes(x = country_us, fill = born_country_us)) +
+  geom_bar() +
+  coord_flip() +
+  facet_wrap(~ category) +
+  labs(title = "Bar Plot Faceted by Prize Category", 
+       x = "Country", 
+       y = "Number of Prizes Won")
+```
 
-### Exercise 6
+![](lab-03_files/figure-gfm/unnamed-chunk-2-1.png)<!-- --> …
+
+### Exercise 6: Germany and the UK tie for most common with 7 scientists who won their prizes while in the US.
+
+``` r
+nobel_living %>%
+  filter(country == "USA") %>%
+  filter(born_country_us == "Other") %>%
+  count(born_country) %>%
+  arrange(desc(n))
+```
+
+    ## # A tibble: 21 × 2
+    ##    born_country       n
+    ##    <chr>          <int>
+    ##  1 Germany            7
+    ##  2 United Kingdom     7
+    ##  3 China              5
+    ##  4 Canada             4
+    ##  5 Japan              3
+    ##  6 Australia          2
+    ##  7 Israel             2
+    ##  8 Norway             2
+    ##  9 Austria            1
+    ## 10 Finland            1
+    ## # ℹ 11 more rows
 
 …

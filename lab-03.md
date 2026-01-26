@@ -41,47 +41,74 @@ spaces in code chunk labels.
 
 ``` r
 nobel_living <-nobel %>%
-      filter(!is.na(died_date),!is.na(gender), !is.na(country))
+      filter(is.na(died_date),gender != "org", !is.na(country))
 
 nobel_living %>%
   select(died_date, gender, country)
 ```
 
-    ## # A tibble: 453 × 3
-    ##    died_date  gender country       
-    ##    <date>     <chr>  <chr>         
-    ##  1 1923-02-10 male   Germany       
-    ##  2 1928-02-04 male   Netherlands   
-    ##  3 1943-10-09 male   Netherlands   
-    ##  4 1908-08-25 male   France        
-    ##  5 1906-04-19 male   France        
-    ##  6 1934-07-04 female France        
-    ##  7 1919-06-30 male   United Kingdom
-    ##  8 1947-05-20 male   Germany       
-    ##  9 1940-08-30 male   United Kingdom
-    ## 10 1931-05-09 male   USA           
-    ## # ℹ 443 more rows
+    ## # A tibble: 228 × 3
+    ##    died_date gender country       
+    ##    <date>    <chr>  <chr>         
+    ##  1 NA        male   USA           
+    ##  2 NA        male   USA           
+    ##  3 NA        male   USA           
+    ##  4 NA        male   USA           
+    ##  5 NA        male   USA           
+    ##  6 NA        male   United Kingdom
+    ##  7 NA        male   United Kingdom
+    ##  8 NA        male   Denmark       
+    ##  9 NA        male   USA           
+    ## 10 NA        male   USA           
+    ## # ℹ 218 more rows
 
 ``` r
 nobel_living_frame <-as.data.frame(nobel_living %>%
   select(died_date, gender, country))
-#holy shit that worked
+
 nrow(nobel_living_frame)
 ```
 
-    ## [1] 453
-
-``` r
-#but I don't think any NAs are in here, so it should be at the 228 observations? confused about what I did wrong 
-```
+    ## [1] 228
 
 ### Exercise 3
 
-Remove this text, and add your answer for Exercise 1 here. Add code
-chunks as needed. Don’t forget to label your code chunk. Do not use
-spaces in code chunk labels.
+``` r
+nobel_living <- nobel_living %>%
+  mutate(
+    country_us = if_else(country == "USA", "USA", "Other")
+  )
 
-### Exercise 4
+nobel_living_science <- nobel_living %>%
+  filter(category %in% c("Physics", "Medicine", "Chemistry", "Economics"))
+#nobel_living_science has everything in terms of US or not at the time of winning the prize, and narrows down the disciplines to physics, medicine, chemistry, and econ 
+
+#faceted bar plot 
+ggplot(nobel_living_science, aes(x = country_us)) +
+  geom_bar() +
+  coord_flip() +
+  facet_wrap(~ category) +
+  labs(title = "Bar Plot Faceted by Prize Category", 
+       x = "Country", 
+       y = "Number of Prizes Won")
+```
+
+![](lab-03_files/figure-gfm/mutate-1.png)<!-- -->
+
+### Exercise 4: 105 from the US, and 123 from other countries
+
+``` r
+nobel_living <-nobel_living %>%
+  mutate(
+   born_country_us = if_else(born_country == "USA", "USA", "Other")
+  )
+
+table(nobel_living$born_country_us)
+```
+
+    ## 
+    ## Other   USA 
+    ##   123   105
 
 …
 

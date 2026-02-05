@@ -25,6 +25,8 @@ ncol(nobel)
 #There are 26 variables and 935 observations. 
 ```
 
+There are `r nrow(nobel)` rows and `r ncol(nobel)` collumns :) 
+
 ### Exercise 2
 
 ```{r data frames}
@@ -74,9 +76,12 @@ nobel_living <-nobel_living %>%
 
 table(nobel_living$born_country_us)
 ```
-...
 
-### Exercise 5: The data doesn't exactly support Buzzfeed's claim, since many of the US winners are immigrants. However, the variable born_country_us doesn't give us any information about how old they were when they moved to the US, so its possible that maybe some of them were toddlers when they moved, grew up in the US, went to school here, etc, and it isn't fair to say that they should be counted as foriegners. If I had to make a decision though, I would say buzzfeed is wrong. 
+
+### Exercise 5: 
+
+The data doesn't exactly support Buzzfeed's claim, since many of the US winners are immigrants. However, the variable born_country_us doesn't give us any information about how old they were when they moved to the US, so its possible that maybe some of them were toddlers when they moved, grew up in the US, went to school here, etc, and it isn't fair to say that they should be counted as foriegners. If I had to make a decision though, I would say buzzfeed is wrong. 
+
 ```{r}
 ggplot(nobel_living, aes(x = country_us, fill = born_country_us)) +
   geom_bar() +
@@ -87,9 +92,12 @@ ggplot(nobel_living, aes(x = country_us, fill = born_country_us)) +
        y = "Number of Prizes Won")
 
 ```
-...
 
-### Exercise 6: Germany and the UK tie for most common with 7 scientists who won their prizes while in the US.
+
+### Exercise 6: 
+
+Germany and the UK tie for most common with 7 scientists who won their prizes while in the US.
+
 ```{r}
 nobel_living %>%
   filter(country == "USA") %>%
@@ -98,5 +106,3 @@ nobel_living %>%
   arrange(desc(n))
 ```
 
-
-...
